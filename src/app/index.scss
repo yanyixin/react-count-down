@@ -1,3 +1,8 @@
+@import "../style/base";
 #root{
-  background-color: pink;
+  background-color: #ccc;
+  margin: 0 auto;
+  .app-wrapper{
+    padding: 20px;
+  }
 }

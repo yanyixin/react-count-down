@@ -38,7 +38,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      Component: path.resolve(workingDir, 'src/component/'),
+      Components: path.resolve(workingDir, 'src/components/'),
       Module: path.resolve(workingDir, 'src/module/')
     },
     // Add '.ts' and '.tsx' as resolvable extensions.
@@ -55,10 +55,10 @@ module.exports = {
       drop_debugger: true,
       drop_console: true
     }
-  }),
-    new openBrowserWebpackPlugin({
-      url: 'http://localhost:8081/index.html'
-    }),
+  })
+    // new openBrowserWebpackPlugin({
+    //   url: 'http://localhost:8081/index.html'
+    // }),
   ]
 };
 
