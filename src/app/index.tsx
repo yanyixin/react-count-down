@@ -17,10 +17,9 @@ export class App extends React.Component<any, IndexInterfaceState>{
     }
   }
 
-  public getSmsHandler(): void {
-    const phoneVal = this.phoneInput.value;
+  public changePhone(e: any): void {
     this.setState({
-      phone : phoneVal
+      phone : e.target.value
     });
   }
 
@@ -34,6 +33,8 @@ export class App extends React.Component<any, IndexInterfaceState>{
             className="phone-input"
             type="text"
             maxLength={11}
+            onChange={e => this.changePhone(e)}
+            value={phone}
             ref={input => this.phoneInput = input}
           />
         </div>
@@ -43,7 +44,6 @@ export class App extends React.Component<any, IndexInterfaceState>{
           phone={phone}
           isNeedValidatePhone={isNeedValidatePhone}
           waitTime={10}
-          getSmsFunc={() => this.getSmsHandler()}
         />
       </div>
     )

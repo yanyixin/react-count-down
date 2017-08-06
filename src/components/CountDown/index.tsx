@@ -29,11 +29,9 @@ class CountDown extends React.Component<IndexInterfaceState, CountDownState> {
 
   public handleClick(): void {
     const {pending, disabled} = this.state;
-    const {getSmsFunc, isNeedValidatePhone, phone} = this.props;
+    const {isNeedValidatePhone, phone} = this.props;
     if(pending || disabled) return;
     if(isNeedValidatePhone) {
-      getSmsFunc && getSmsFunc();
-      alert(phone);
       if(!this.validatePhone(phone)) return;
     }
     this.setButtonIsPending();
