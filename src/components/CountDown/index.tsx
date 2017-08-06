@@ -13,17 +13,24 @@ class CountDown extends React.Component<IndexInterfaceState, CountDownState> {
 
   private countInterval: number;
 
+  public static defaultProps = {
+    defaultTip: TEXT.COUNT_DOWN_DEFAULT_CONTENT,
+    buttonDefaultContent: TEXT.COUNT_DOWN_DEFAULT_CONTENT,
+    buttonContent: TEXT.COUNT_DOWN_DEFAULT_CONTENT,
+    countDownTip: TEXT.COUNT_DOWN_TIP,
+    count: TIME.WAIT_TIME,
+    countDownTime: TIME.COUNT_DOWN_TIME
+  };
+
   constructor(props: IndexInterfaceState) {
     super(props);
-    const {defaultTip, waitTime, countDownTip, countDownTime} = this.props;
+    const {defaultTip, waitTime} = this.props;
     this.state = {
       pending: false,
       disabled: false,
-      buttonDefaultContent: defaultTip || TEXT.COUNT_DOWN_DEFAULT_CONTENT,
-      buttonContent: defaultTip || TEXT.COUNT_DOWN_DEFAULT_CONTENT,
-      countDownTip: countDownTip || TEXT.COUNT_DOWN_TIP,
-      count: waitTime || TIME.WAIT_TIME,
-      countDownTime: countDownTime || TIME.COUNT_DOWN_TIME
+      buttonDefaultContent: defaultTip,
+      buttonContent: defaultTip,
+      count: waitTime,
     };
   }
 
@@ -71,7 +78,8 @@ class CountDown extends React.Component<IndexInterfaceState, CountDownState> {
 
   // 倒计时
   private countDownHandler() {
-    const {count, countDownTime, countDownTip} = this.state;
+    const {count} = this.state;
+    const {countDownTime, countDownTip} = this.props;
     let newCount: number = count;
     this.countInterval = setInterval(() => {
       if(newCount <= 0) {

@@ -39,10 +39,7 @@ export class App extends React.Component<any, IndexInterfaceState>{
           />
         </div>
         <CountDown
-          defaultTip={defaultTip}
-          countDownTip={countDownTip}
           phone={phone}
-          isNeedValidatePhone={isNeedValidatePhone}
           waitTime={10}
         />
       </div>

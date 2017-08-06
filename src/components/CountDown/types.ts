@@ -3,9 +3,7 @@ export interface CountDownState {
   disabled: boolean,
   buttonContent: string,
   buttonDefaultContent: string,
-  count: number,
-  countDownTip: string,
-  countDownTime: number
+  count: number
 }
 
 export interface responseData {
