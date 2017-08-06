@@ -3,33 +3,17 @@
  */
 import * as React from "react";
 import * as classnames from 'classnames';
-import {TEXT, TIME, RULES, ERROR_CODE} from '../../module/config';
+import {TEXT, TIME, RULES, ERROR_CODE, URLS} from 'Module/config';
+import PromiseFunc from 'Module/util';
 import './index.scss';
+import { IndexInterfaceState } from 'Interface/types';
+import {CountDownState, responseData} from './types'
 
-interface CountDownProps {
-  defaultTip?: string,
-  countDownTip?: string,
-  isNeedValidatePhone: boolean,
-  phone?: string,
-  waitTime?: number,
-  countDownTime?: number
-}
-
-interface CountDownState {
-  pending: boolean,
-  disabled: boolean,
-  buttonContent: string,
-  buttonDefaultContent: string,
-  count: number,
-  countDownTip: string,
-  countDownTime: number
-}
-
-export default class CountDown extends React.Component<CountDownProps, CountDownState> {
+class CountDown extends React.Component<IndexInterfaceState, CountDownState> {
 
   private countInterval: number;
 
-  constructor(props: CountDownProps) {
+  constructor(props: IndexInterfaceState) {
     super(props);
     const {defaultTip, waitTime, countDownTip, countDownTime} = this.props;
     this.state = {
@@ -45,14 +29,15 @@ export default class CountDown extends React.Component<CountDownProps, CountDown
 
   public handleClick(): void {
     const {pending, disabled} = this.state;
-    const {isNeedValidatePhone} = this.props;
+    const {getSmsFunc, isNeedValidatePhone, phone} = this.props;
     if(pending || disabled) return;
     if(isNeedValidatePhone) {
-      if(!this.validatePhone) return;
+      getSmsFunc && getSmsFunc();
+      alert(phone);
+      if(!this.validatePhone(phone)) return;
     }
-    // this.setButtonIsPending();
-    this.countDownHandler();
-    // this.setButtonIsDisabled();
+    this.setButtonIsPending();
+    this.sendData();
   }
 
   // 校验手机号
@@ -75,13 +60,6 @@ export default class CountDown extends React.Component<CountDownProps, CountDown
       buttonContent: TEXT.COUNT_DOWN_PENDING
     })
   }
-
-  // 设置按钮为 disabled 状态
-  // private setButtonIsDisabled(): void {
-  //   this.setState({
-  //     pending: false
-  //   })
-  // }
 
   // 设置按钮为可用状态
   private setButtonIsUsable(): void {
@@ -112,6 +90,38 @@ export default class CountDown extends React.Component<CountDownProps, CountDown
     },countDownTime)
   }
 
+  // 发送请求
+  private sendData() {
+    return PromiseFunc(URLS.SUCCESS_URL).then((res: responseData) => {
+      this.successHandler(res);
+    }).catch((e: any) => {
+      console.log('e', e);
+      this.setButtonIsUsable();
+      alert(ERROR_CODE.SERVER);
+    })
+  }
+
+  // 请求成功的处理函数
+  private successHandler(res: responseData) {
+    const status = res.status;
+    switch(status) {
+      case 0:
+        // 开始倒计时
+        this.countDownHandler();
+        break;
+      case -123456:
+        // 手机号码错误
+        this.setButtonIsUsable();
+        alert(res.message || ERROR_CODE.PHONE_ERROR);
+        break;
+      default:
+        // 其他的错误
+        this.setButtonIsUsable();
+        alert(res.message || ERROR_CODE.NETWORK);
+        break;
+    }
+  }
+
   public render() {
     const {pending, disabled, buttonContent} = this.state;
     const countDownClassNames:any = classnames({
@@ -119,11 +129,14 @@ export default class CountDown extends React.Component<CountDownProps, CountDown
       'pending': pending,
       'disabled': disabled
     });
-    console.log('TIME',TIME);
     return (
-      <div className={countDownClassNames} onClick={() => this.handleClick()}>
+      <div
+        className={countDownClassNames}
+        onClick={() => this.handleClick()}
+      >
         {buttonContent}
       </div>
     );
   }
 }
+export default CountDown;

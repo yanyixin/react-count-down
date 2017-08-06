@@ -4,9 +4,17 @@
     "sourceMap": true, // 生成相应的.map文件。
     "noImplicitAny": true, // 在表达式和声明上有隐含的any类型时不报错
     "module": "commonjs",  // 指定生成哪个模块系统代码
+    "moduleResolution": "node",
     "target": "es5", // 指定ECMAScript目标版本
     "jsx": "react",  // 在.tsx文件里支持JSX："React"或"Preserve" react模式会生成React.createElement，在使用前不需要再进行转换操作了，输出文件的扩展名为.js。
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "lib": ["es5", "es6", "dom"],
+    "baseUrl": "./",
+    "paths": {
+      "Components/*": ["src/components/*"],
+      "Module/*": ["src/module/*"],
+      "Interface/*": ["src/interface/*"]
+    }
   },
   "include": [
     "./src/**/*"

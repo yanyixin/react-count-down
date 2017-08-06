@@ -22,17 +22,9 @@ module.exports = {
         test: /\.scss$/,
         loader: 'style-loader?sourceMap!css-loader?sourceMap!sass-loader?sourceMap!autoprefixer-loader'
       },
-      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
       {
         test: /\.tsx?$/,
         loaders: ['awesome-typescript-loader', 'source-map-loader']
-      },
-      
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "source-map-loader"
       }
     ]
   },
@@ -42,7 +34,8 @@ module.exports = {
       Module: path.resolve(workingDir, 'src/module/')
     },
     // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js", ".json"]
+    extensions: [".ts", ".tsx", ".js", ".json"],
+    modules: [path.resolve(__dirname, "src"), "node_modules"]
   },
   // When importing a module whose path matches one of the following, just
   // assume a corresponding global variable exists and use that instead.
@@ -59,6 +52,11 @@ module.exports = {
     // new openBrowserWebpackPlugin({
     //   url: 'http://localhost:8081/index.html'
     // }),
-  ]
+  ],
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 };
 

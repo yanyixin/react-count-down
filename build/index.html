@@ -9,6 +9,27 @@
         <div id="root"></div>
         <!-- Dependencies -->
         <!-- Main -->
+        <script type="text/javascript" src="http://7xvnyd.com1.z0.glb.clouddn.com/mock.js"></script>
+        <script>
+          Mock.mock('/sendSms/success', function(options) {
+            return {
+              "status":0,
+              "message":"成功",
+              "data":{
+
+              }
+            }
+          });
+          Mock.mock('/sendSms/error', function(options) {
+            return {
+              "status":-123456,
+              "message":"手机号不存在",
+              "data":{
+
+              }
+            }
+          });
+        </script>
         <script src="/assets/app.bundle.js"></script>
     </body>
 </html>

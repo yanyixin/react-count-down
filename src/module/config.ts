@@ -1,7 +1,6 @@
 /**
  * Created by yanmeng on 2017/8/5.
  */
-import {TIME_TYPE} from './type';
 
 export const TIME = {
   WAIT_TIME : 60,
@@ -20,5 +19,12 @@ export const TEXT = {
 
 export const ERROR_CODE = {
   PHONE_EMPTY: '手机号不能为空',
-  PHONE_ERROR: '请输入正确格式的手机号'
+  PHONE_ERROR: '请输入正确格式的手机号',
+  NETWORK: '网络开小差了，请稍后重试',
+  SERVER: '系统君开小差了，请稍后重试'
+};
+
+export const URLS = {
+  SUCCESS_URL: '/sendSms/success',
+  ERROR_URL: '/sendSms/error'
 };

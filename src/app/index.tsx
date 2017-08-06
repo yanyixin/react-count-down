@@ -1,11 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import './index.scss';
-import CountDown from '../components/CountDown/index';
-import { TIME, RULES, ERROR_CODE } from "../module/config";
-import { IndexInterface } from './interface'
+import CountDown from 'Components/CountDown';
+import { IndexInterfaceState } from 'Interface/types'
 
-export class App extends React.Component<any, any>{
+export class App extends React.Component<any, IndexInterfaceState>{
   private phoneInput: HTMLInputElement; // 定义 phoneVal 的类型
   constructor(props: any) {
     super(props);
@@ -13,12 +12,12 @@ export class App extends React.Component<any, any>{
     this.state = {
       defaultTip: "获取验证码",
       countDownTip: "请耐心等待",
-      phone: '135****6968',
-      isNeedValidatePhone: false
+      phone: '',
+      isNeedValidatePhone: true
     }
   }
 
-  public clickMe(): void {
+  public getSmsHandler(): void {
     const phoneVal = this.phoneInput.value;
     this.setState({
       phone : phoneVal
@@ -26,22 +25,25 @@ export class App extends React.Component<any, any>{
   }
 
   public render() {
-    console.log('this.state',this.state);
     const {defaultTip, countDownTip, phone, isNeedValidatePhone} = this.state;
     return (
       <div className="app-wrapper">
-        <input
-          className="phone-input"
-          type="text"
-          ref={input => this.phoneInput = input}
-        />
-        <div onClick={() => this.clickMe()}>点我</div>
+        <div className="input-wrapper">
+          <label className="input-label">手机号码：</label>
+          <input
+            className="phone-input"
+            type="text"
+            maxLength={11}
+            ref={input => this.phoneInput = input}
+          />
+        </div>
         <CountDown
           defaultTip={defaultTip}
           countDownTip={countDownTip}
           phone={phone}
           isNeedValidatePhone={isNeedValidatePhone}
           waitTime={10}
+          getSmsFunc={() => this.getSmsHandler()}
         />
       </div>
     )
