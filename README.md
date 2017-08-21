@@ -15,7 +15,6 @@ interface CountDownProps {
   phone: string, // 手机号，必传，发送短信验证码会用到
   waitTime?: number, // 需要等待的时间，选传，默认为 60
   countDownTime?: number, // 倒计时的间隔时间，选传，默认为 1
-  getSmsFunc: any // 
 }
 ```
 
@@ -34,7 +33,6 @@ import CountDown from 'Components/CountDown';
   isNeedValidatePhone={isNeedValidatePhone}
   phone={phone}
   waitTime={10}
-  getSmsFunc={() => this.getSmsHandler()}
 />
 ```
 ## 功能
