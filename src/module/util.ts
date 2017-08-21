@@ -4,7 +4,7 @@
 
 enum methodType {'GET','PUT','PATCH','DELETE','POST'};
 
-export default function(method: string, url: string, data: any): any {
+export default function(method: string, url: string, data: Object): any {
   return new Promise<string>((resolve: Function, reject: Function) => {
     let xhr = new XMLHttpRequest();
 
